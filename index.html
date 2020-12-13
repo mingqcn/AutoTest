@@ -89,7 +89,7 @@
                         adminGateway: this.admingateway,
                     }
                     axios
-                        .post('/ajax/newtask', newRequestParams)
+                        .post('http://localhost:8090/ajax/newtask', newRequestParams)
                         .then(response => {
                             console.log('/ajax/newtask', response.data)
                             this.notice = response.data.info

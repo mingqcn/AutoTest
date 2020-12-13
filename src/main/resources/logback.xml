@@ -65,7 +65,7 @@
     </logger>
 
     <!-- 日志输出级别 -->
-    <logger name="cn.edu.xmu.autotest" level = "DEBUG"/>
+    <logger name="cn.edu.xmu.testserver" level = "DEBUG"/>
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
