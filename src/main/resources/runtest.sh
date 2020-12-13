@@ -1,3 +1,3 @@
 #!/bin/bash
 git pull
-mvn clean test site -Dooad.group=$0 -Dooad.testdor=$0 -Dmanagement.gate=$1 -Dmall.gate=$2
+mvn clean test site -Dooad.group=$0 -Dooad.testdir=$1 -Dmanagement.gate=$2 -Dmall.gate=$3
