@@ -92,7 +92,7 @@
                         .post('http://localhost:8090/ajax/newtask', newRequestParams)
                         .then(response => {
                             console.log('/ajax/newtask', response.data)
-                            this.notice = response.data.info
+                            this.notice ='请在至少10分钟后，访问http://172.16.1.66/'+response.data.path+'查看测试结果'
                         })
                         .catch(error => {
                             if (error.response == undefined) return

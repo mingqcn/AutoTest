@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class TestService {
     private  static  final Logger logger = LoggerFactory.getLogger(TestService.class);
 
-    public void newtask(String groupName, String manageGate, String mallGate){
+    public String newtask(String groupName, String manageGate, String mallGate){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").withZone(ZoneId.systemDefault());
         String dir = LocalDateTime.now().format(format);
         logger.debug("newtask: groupName = "+groupName+",dir = "+ dir +", manageGate="+manageGate+", mallGate="+mallGate);
@@ -27,5 +27,6 @@ public class TestService {
         }catch (IOException e){
             logger.error("newtask: msg = "+e.getMessage());
         }
+        return groupName+"/"+dir;
     }
 }
