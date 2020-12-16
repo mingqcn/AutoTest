@@ -75,7 +75,10 @@ public class LiteSSHCaller {
                 config.put("StrictHostKeyChecking", "no");
                 private_get_session.setConfig(config);
                 private_get_session.setTimeout(2000);
+                logger.debug("getSession: username = "+username +
+                        "password = "+password);
                 private_get_session.connect();
+
             } catch (JSchException e) {
                 return null;
             }
