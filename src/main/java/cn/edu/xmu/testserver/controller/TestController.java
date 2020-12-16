@@ -34,9 +34,4 @@ public class TestController {
         logger.debug("newtask: ret = "+ret);
         return ret;
     }
-
-    @GetMapping("/")
-    public String index(){
-        return "index";
-    }
 }
