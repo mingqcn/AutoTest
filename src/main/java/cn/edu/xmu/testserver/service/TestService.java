@@ -20,8 +20,8 @@ public class TestService {
     public String newtask(String groupName, String manageGate, String mallGate){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").withZone(ZoneId.systemDefault());
         String dir = LocalDateTime.now().format(format);
-        logger.debug("newtask: groupName = "+groupName+",dir = "+ dir +", manageGate="+manageGate+", mallGate="+mallGate);
         String [] cmd = {"sh","/home/mybaby/privilege/public-test/runtest.sh",groupName, dir, manageGate, mallGate};
+        logger.debug("newtask: cmd = "+cmd);
         try {
             Process proc = Runtime.getRuntime().exec(cmd);
         }catch (IOException e){
