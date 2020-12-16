@@ -76,7 +76,7 @@ public class LiteSSHCaller {
                 private_get_session.setConfig(config);
                 private_get_session.setTimeout(2000);
                 logger.debug("getSession: username = "+username +
-                        "password = "+password);
+                        ", password = "+password);
                 private_get_session.connect();
 
             } catch (JSchException e) {
@@ -97,6 +97,7 @@ public class LiteSSHCaller {
 
             //取得命令结果的输出流
             var stream = channelExec.getInputStream();
+            InputStream errStream = channelExec.getErrStream();
 
             //用一个读输出流类去读
             InputStreamReader isr=new InputStreamReader(stream);
@@ -108,7 +109,18 @@ public class LiteSSHCaller {
             {
                 logger.debug(line);
             }
-            stream.close();
+            br.close();
+
+            //用缓冲器读行
+            BufferedReader err=new BufferedReader(new InputStreamReader(errStream));
+            line=null;
+            //直到读完为止
+            while((line=err.readLine())!=null)
+            {
+                logger.debug(line);
+            }
+            err.close();
+
         } catch (IOException | JSchException e) {
         } finally {
             try {
