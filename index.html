@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
@@ -31,7 +31,7 @@
                 <span v-if="!isNull(adminwarn)" class="small red">{{adminwarn}}</span><br>
                 <input v-model="admingateway" placeholder="管理员网关(ip:port)" class="small"><br>
                 <br>
-                <button v-on:click="newtask()"> 提交测试 </button>
+                <button v-on:click="newtask"> 提交测试 </button>
                 <br>
                 <p v-if="!isNull(notice)"><b>通知：</b> <span class="small">{{notice}}</span></p>
             </div>
