@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>测试系统</title>
+    <title>面向对象与JavaEE自动测试系统</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <link rel="stylesheet" href="/base.css">
 </head>
 
 <body>
-<h1>OOAD - 提交测试</h1>
-
+<h1>提交试</h1>
+<h2>次测试都会产生一个目录，公开测试结果在public目录下，非公开测试结果在private目录下</h2>
 <div class="outbox">
     <div id="app">
         <div class="lspan">
             <h2>组名</h2>
-            <span class="small">组名任意取，用于标识测试及找回测试数据</span>
+            <span class="small">组名</span>
             <span v-if="!isNull(gnamewarn)" class="small red">{{gnamewarn}}</span><br>
             <input v-model="gname" placeholder="组名"><br>
         </div>
@@ -27,7 +27,7 @@
             <span v-if="!isNull(mallwarn)" class="small red">{{mallwarn}}</span><br>
             <input v-model="mallgateway" placeholder="商城网关(ip:port)" class="small"><br>
             <br>
-            <span>管理员网关</span>
+            <span>后台网</span>
             <span v-if="!isNull(adminwarn)" class="small red">{{adminwarn}}</span><br>
             <input v-model="admingateway" placeholder="管理员网关(ip:port)" class="small"><br>
             <br>
