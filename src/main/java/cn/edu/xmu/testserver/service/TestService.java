@@ -27,6 +27,6 @@ public class TestService {
         }catch (IOException e){
             logger.error("newtask: msg = "+e.getMessage());
         }
-        return "http://172.16.1.66/st/"+groupName+"/"+dir;
+        return "http://172.16.1.66/test/"+groupName+"/"+dir;
     }
 }
