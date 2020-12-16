@@ -2,7 +2,7 @@ server:
   port: 8090
 
 adminhost:
-  usernameybabay
+  username: mybaby
   password: 123456
   ip:  127.0.0.1
 
