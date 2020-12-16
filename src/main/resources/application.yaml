@@ -11,3 +11,8 @@ adminhostpassword:
   asd
 adminhostip:
   127.0.0.1
+spring:
+  mvc:
+    view:
+      suffix: .html
+
