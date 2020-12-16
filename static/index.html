@@ -83,9 +83,9 @@
                     adminGateway: this.admingateway,
                 }
                 axios
-                    .post('/ajax/newtask', newRequestParams)
+                    .post('http://localhost:8090/ajax/newtask', newRequestParams)
                     .then(response => {
-                        console.log('http://localhost:8090/ajax/newtask', response.data)
+                        console.log('/ajax/newtask', response.data)
                         this.notice = "测试运行结束"
                         this.resultUrl = response.data.path;
                     })
