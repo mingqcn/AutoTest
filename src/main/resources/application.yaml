@@ -1,3 +1,13 @@
 server:
   port: 8090
 
+
+
+
+
+adminhostusername:
+  mike
+adminhostpassword:
+  asd
+adminhostip:
+  127.0.0.1
