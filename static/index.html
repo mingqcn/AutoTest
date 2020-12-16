@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>测试系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="/base.css">
+</head>
+
+<body>
+<h1>OOAD - 提交测试</h1>
+
+<div class="outbox">
+    <div id="app">
+        <div class="lspan">
+            <h2>组名</h2>
+            <span class="small">组名任意取，用于标识测试及找回测试数据</span>
+            <span v-if="!isNull(gnamewarn)" class="small red">{{gnamewarn}}</span><br>
+            <input v-model="gname" placeholder="组名"><br>
+        </div>
+        <div class="lspan">
+            <h2>新测试</h2>
+            <span>商城网关</span>
+            <span v-if="!isNull(mallwarn)" class="small red">{{mallwarn}}</span><br>
+            <input v-model="mallgateway" placeholder="商城网关(ip:port)" class="small"><br>
+            <br>
+            <span>管理员网关</span>
+            <span v-if="!isNull(adminwarn)" class="small red">{{adminwarn}}</span><br>
+            <input v-model="admingateway" placeholder="管理员网关(ip:port)" class="small"><br>
+            <br>
+            <button v-on:click="newtask()"> 提交测试 </button><br>
+            <p v-if="!isNull(resultUrl)">结果页：<a :href="resultUrl">点击跳转</a></p>
+            <p v-if="!isNull(notice)"><b>通知：</b> <span class="small">{{notice}}</span></p>
+        </div>
+    </div>
+</div>
+<script>
+    function IsNull(v) {
+        return (v == "" || v == null || v == undefined || v.trim() == "")
+    }
+    var pattern = /(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d):[1-9][0-9]{1,4}/
+    new Vue({
+        el: '#app',
+        data: {
+            notice: "",
+            resultUrl: "",
+
+            gname: "",
+            gnamewarn: "",
+            mallgateway: "",
+            mallwarn: "",
+            admingateway: "",
+            adminwarn: "",
+        },
+        methods: {
+            isNull: function (v) {
+                return IsNull(v)
+            },
+            newtask: function () {
+                this.notice = ""
+                if (IsNull(this.gname)) {
+                    this.gnamewarn = "字段不能为空"
+                    return;
+                } else this.gnamewarn = ""
+
+                if (IsNull(this.mallgateway) || this.mallgateway.search(pattern) != 0) {
+                    this.mallwarn = "字段不正确"
+                    return;
+                } else this.mallwarn = ""
+
+                if (IsNull(this.admingateway) || this.admingateway.search(pattern) != 0) {
+                    this.adminwarn = "字段不正确"
+                    return;
+                } else this.adminwarn = ""
+                
+                this.notice = "测试正在运行"
+                var newRequestParams = {
+                    groupname: this.gname,
+                    mallGateway: this.mallgateway,
+                    adminGateway: this.admingateway,
+                }
+                axios
+                    .post('/ajax/newtask', newRequestParams)
+                    .then(response => {
+                        console.log('/ajax/newtask', response.data)
+                        this.notice = "测试运行结束"
+                        this.resultUrl = response.data.path;
+                    })
+                    .catch(error => {
+                        if (error.response == undefined) return
+                        this.notice = !IsNull(error.response.data.error)
+                            ? error.response.data.error
+                            : "芜湖，执行脚本出错或者服务器挂了."
+                        console.log('/ajax/newtask', error.response.data)
+                    })
+            },
+        },
+    })
+</script>
+
+</body>
+
+</html>
