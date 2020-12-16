@@ -5,5 +5,4 @@ spring:
   mvc:
     view:
       suffix: .html
-      prefix: /static/
 
