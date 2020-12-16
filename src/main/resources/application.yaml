@@ -1,16 +1,11 @@
 server:
   port: 8090
 
+adminhost:
+  usernameybabay
+  password: 123456
+  ip:  127.0.0.1
 
-
-
-
-adminhostusername:
-  mike
-adminhostpassword:
-  asd
-adminhostip:
-  127.0.0.1
 spring:
   mvc:
     view:

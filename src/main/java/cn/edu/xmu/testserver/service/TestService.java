@@ -31,10 +31,22 @@ public class TestService {
 //        String [] cmd = {"sh","/home/mybaby/privilege/public-test/runtest.sh",groupName, dir, manageGate, mallGate};
 //        try {
 //            Process proc = Runtime.getRuntime().exec(cmd);
+    //        //取得命令结果的输出流
+    //        InputStream fis=proc.getInputStream();
+    //        //用一个读输出流类去读
+    //        InputStreamReader isr=new InputStreamReader(fis);
+    //        //用缓冲器读行
+    //        BufferedReader br=new BufferedReader(isr);
+    //        String line=null;
+    //        //直到读完为止
+    //        while((line=br.readLine())!=null)
+    //        {
+    //            logger.debug(line);
+    //        }
 //        }catch (IOException e){
 //            logger.error("newtask: msg = "+e.getMessage());
 //        }
         ssh.runNew(groupName, dir, manageGate, mallGate);
-        return groupName+"/"+dir;
+        return "http://172.16.1.66/test/"+groupName+"/"+dir;
     }
 }

@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.Properties;
 
@@ -19,13 +22,13 @@ import java.util.Properties;
 public class LiteSSHCaller {
     Logger logger = LoggerFactory.getLogger(LiteSSHCaller.class);
 
-    @Value("${adminhostusername}")
+    @Value("${adminhost.username}")
     String username;
 
-    @Value("${adminhostpassword}")
+    @Value("${adminhost.password}")
     String password;
 
-    @Value("${adminhostip}")
+    @Value("${adminhost.ip}")
     String ip;
 
     String bashname = "/home/mybaby/privilege/public-test/runtest.sh";
@@ -35,23 +38,22 @@ public class LiteSSHCaller {
         getSession();
     }
 
-    public boolean runNew(String... args) {
+    public void runNew(String... args) {
         var session = getSession();
-        if (session == null) return false;
+        if (session != null) {
 
-        /* * WARNING: setsid xx & 命令如果在后台有输出，会导致进程卡死(bug of JSch) * */
-        /* * WARNING: 所以需要将输出重定向到xxx.log中 * */
-        String cmdTemplate = "%bashname %arg0 %arg1 %arg2 %arg3 2>&1";
-        String result = execGetResult(session,
-                cmdTemplate
-                        .replace("%bashname",bashname)
-                        .replace("%arg0",   args[0])
-                        .replace("%arg1",   args[1])
-                        .replace("%arg2",   args[2])
-                        .replace("%arg3",   args[3])
-        );
-        logger.debug(result);
-        return result != null;
+            /* * WARNING: setsid xx & 命令如果在后台有输出，会导致进程卡死(bug of JSch) * */
+            /* * WARNING: 所以需要将输出重定向到xxx.log中 * */
+            String cmdTemplate = "%bashname %arg0 %arg1 %arg2 %arg3 2>&1";
+            execGetResult(session,
+                    cmdTemplate
+                            .replace("%bashname", bashname)
+                            .replace("%arg0", args[0])
+                            .replace("%arg1", args[1])
+                            .replace("%arg2", args[2])
+                            .replace("%arg3", args[3])
+            );
+        }
     }
 
     // session池，提高响应速度
@@ -81,7 +83,7 @@ public class LiteSSHCaller {
         return private_get_session;
     }
 
-    String execGetResult(Session session, String cmd) {
+    void execGetResult(Session session, String cmd) {
         ChannelExec channelExec = null;
         try {
             channelExec = (ChannelExec) session.openChannel("exec");
@@ -90,12 +92,21 @@ public class LiteSSHCaller {
             channelExec.setErrStream(null);
             channelExec.connect();
 
+            //取得命令结果的输出流
             var stream = channelExec.getInputStream();
-            var s = new String(stream.readAllBytes());
+
+            //用一个读输出流类去读
+            InputStreamReader isr=new InputStreamReader(stream);
+            //用缓冲器读行
+            BufferedReader br=new BufferedReader(isr);
+            String line=null;
+            //直到读完为止
+            while((line=br.readLine())!=null)
+            {
+                logger.debug(line);
+            }
             stream.close();
-            return s;
         } catch (IOException | JSchException e) {
-            return "IOException | JSchException e";
         } finally {
             try {
                 channelExec.disconnect();
