@@ -89,6 +89,7 @@ public class LiteSSHCaller {
     void execGetResult(Session session, String cmd) {
         ChannelExec channelExec = null;
         try {
+            logger.debug("execGetResult: cmd = "+ cmd);
             channelExec = (ChannelExec) session.openChannel("exec");
             channelExec.setCommand(cmd);
             channelExec.setInputStream(null);
