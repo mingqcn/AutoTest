@@ -9,8 +9,8 @@ import java.net.http.HttpResponse;
 
 @Controller
 public class PageController {
-    @GetMapping("/")
-    public void index(HttpServletResponse response) throws IOException {
-        response.sendRedirect("index.html");
-    }
+//    @GetMapping("/")
+//    public void index(HttpServletResponse response) throws IOException {
+//        response.sendRedirect("index.html");
+//    }
 }
