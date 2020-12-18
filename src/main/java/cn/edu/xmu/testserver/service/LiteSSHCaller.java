@@ -31,6 +31,9 @@ public class LiteSSHCaller {
     @Value("${adminhost.ip}")
     String ip;
 
+    @Value("${adminhost.console}")
+    private Boolean console;
+
     String bashname = "/home/mybaby/privilege/public-test/runtest.sh";
 
     @PostConstruct
@@ -100,28 +103,27 @@ public class LiteSSHCaller {
             var stream = channelExec.getInputStream();
             InputStream errStream = channelExec.getErrStream();
 
-            //用一个读输出流类去读
-            InputStreamReader isr=new InputStreamReader(stream);
-            //用缓冲器读行
-            BufferedReader br=new BufferedReader(isr);
-            String line=null;
-            //直到读完为止
-            while((line=br.readLine())!=null)
-            {
-                logger.debug(line);
-            }
-            br.close();
+            if (console) {
+                //用一个读输出流类去读
+                InputStreamReader isr = new InputStreamReader(stream);
+                //用缓冲器读行
+                BufferedReader br = new BufferedReader(isr);
+                String line = null;
+                //直到读完为止
+                while ((line = br.readLine()) != null) {
+                    logger.debug(line);
+                }
+                br.close();
 
-            //用缓冲器读行
-            BufferedReader err=new BufferedReader(new InputStreamReader(errStream));
-            line=null;
-            //直到读完为止
-            while((line=err.readLine())!=null)
-            {
-                logger.debug(line);
+                //用缓冲器读行
+                BufferedReader err = new BufferedReader(new InputStreamReader(errStream));
+                line = null;
+                //直到读完为止
+                while ((line = err.readLine()) != null) {
+                    logger.debug(line);
+                }
+                err.close();
             }
-            err.close();
-
         } catch (IOException | JSchException e) {
         } finally {
             try {
