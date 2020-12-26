@@ -54,7 +54,7 @@ public class TestService {
             logger.error("newtask: msg = "+e.getMessage());
         }
         ssh.runNew(groupName, dir, manageGate, mallGate);
-        return "http://172.16.1.66/test/"+groupName+"/"+dir;
+        return "http://172.16.0.182/test/"+groupName+"/"+dir;
     }
 
     public String newSSHtask(String groupName, String manageGate, String mallGate){
